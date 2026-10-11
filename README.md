@@ -63,3 +63,35 @@ Data source: [Kaggle Superstore Dataset](https://www.kaggle.com/datasets/vivek46
 
 Overall profit margin is calculated by dividing total profit by total sales, rather than averaging the profit margins of individual line items. The costs included in `Profit` must be determined from the dataset documentation. This project does not assume that `Profit` represents the company's net income.
 
+# 5. Data Preparation & Cleaning
+5. Data Preparation & Cleaning (SQL Staging)
+
+Before diving into analysis, raw string data in `superstore_import` was cleaned and transformed into a structured staging table `stg_superstore`. Key operations included:
+- **String Cleaning**: Removed currency symbols (`$`) and thousand separators (`,`) using `REPLACE()` to prevent `CAST` failures.
+- **Date Parsing**: Converted text dates into standardized `DATE` format using `STR_TO_DATE()`.
+- **Type Casting**: Converted financial metrics into `DECIMAL(10,2)` and quantities into `UNSIGNED INT`.
+
+```sql
+DROP TABLE IF EXISTS stg_superstore;
+
+CREATE TABLE stg_superstore AS
+SELECT 
+    `Order ID` AS order_id,
+    STR_TO_DATE(`Order Date`, '%m/%d/%Y') AS order_date,
+    STR_TO_DATE(`Ship Date`, '%m/%d/%Y') AS ship_date,
+    `Ship Mode` AS ship_mode,
+    `Customer ID` AS customer_id,
+    `Customer Name` AS customer_name,
+    Segment AS segment,
+    Region AS region,
+    State AS state,
+    City AS city,
+    Category AS category,
+    `Sub-Category` AS sub_category,
+    `Product ID` AS product_id,
+    `Product Name` AS product_name,
+    CAST(REPLACE(REPLACE(Sales, '$', ''), ',', '') AS DECIMAL(10, 2)) AS sales,
+    CAST(Quantity AS UNSIGNED) AS quantity,
+    CAST(REPLACE(REPLACE(Discount, '$', ''), '%', '') AS DECIMAL(4, 2)) AS discount,
+    CAST(REPLACE(REPLACE(Profit, '$', ''), ',', '') AS DECIMAL(10, 2)) AS profit
+FROM superstore_import;
