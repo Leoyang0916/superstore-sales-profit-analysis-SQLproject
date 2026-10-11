@@ -115,6 +115,7 @@ SELECT
 FROM stg_superstore
 GROUP BY region, segment
 ORDER BY region, total_sales DESC;
+
 Result:
 
 | region | segment | total_orders | total_items_sold | total_sales | total_profit | avg_order_value |
