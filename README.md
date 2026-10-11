@@ -103,7 +103,7 @@ FROM superstore_import;
 
 * **Objective**: Evaluate revenue contribution and average basket size per order across different market segments.
 
-```sql
+sql
 SELECT 
     region,
     segment,
