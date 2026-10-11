@@ -1,7 +1,7 @@
 # superstore-sales-profit-analysis-SQLproject
 # Author: Yen-Ting Yang
 # SQL Tools: MySQL and MySQL Workbench
-# Visualization Tool: Power BI
+# Visualization Tool: Power BI (Planning)
 
 This project uses Sample Superstore retail data to analyze the distribution of sales and profit, identify products and markets that need priority checking, and explore the relationship between discounts and profitability. By organizing data with SQL, performing grouped comparisons, and visualizing results in Power BI, the query results are turned into actionable business recommendations ready for discussion and validation. 
 
@@ -95,3 +95,39 @@ SELECT
     CAST(REPLACE(REPLACE(Discount, '$', ''), '%', '') AS DECIMAL(4, 2)) AS discount,
     CAST(REPLACE(REPLACE(Profit, '$', ''), ',', '') AS DECIMAL(10, 2)) AS profit
 FROM superstore_import;
+
+# 6. Data Analysis & Findings
+---
+
+### Q1. What are the sales, profit, and Average Order Value (AOV) performance across regions and customer segments?
+
+* **Objective**: Evaluate revenue contribution and average basket size per order across different market segments.
+
+```sql
+SELECT 
+    region,
+    segment,
+    COUNT(DISTINCT order_id) AS total_orders,
+    SUM(quantity) AS total_items_sold,
+    ROUND(SUM(sales), 2) AS total_sales,
+    ROUND(SUM(profit), 2) AS total_profit,
+    ROUND(SUM(sales) / COUNT(DISTINCT order_id), 2) AS avg_order_value
+FROM stg_superstore
+GROUP BY region, segment
+ORDER BY region, total_sales DESC;
+Result:
+
+| region | segment | total_orders | total_items_sold | total_sales | total_profit | avg_order_value |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Central | Consumer | 604 | 4519 | 252031.43 | 8564.05 | 417.27 |
+| Central | Corporate | 348 | 2604 | 157995.79 | 18703.90 | 454.01 |
+| Central | Home Office | 223 | 1657 | 91212.66 | 12438.50 | 409.03 |
+| East | Consumer | 713 | 5347 | 350908.17 | 41190.96 | 492.16 |
+| East | Corporate | 434 | 3358 | 200409.45 | 23622.60 | 461.77 |
+| East | Home Office | 254 | 1913 | 127463.74 | 26709.28 | 501.83 |
+| South | Consumer | 444 | 3178 | 195580.92 | 26913.63 | 440.50 |
+| South | Corporate | 247 | 2016 | 121885.95 | 15215.40 | 493.47 |
+| South | Home Office | 131 | 1015 | 74255.03 | 4620.68 | 566.83 |
+| West | Consumer | 825 | 6477 | 362880.82 | 57450.69 | 439.86 |
+| West | Corporate | 485 | 3630 | 225855.25 | 34437.55 | 465.68 |
+| West | Home Office | 301 | 2159 | 136721.86 | 16530.55 | 454.23 |
