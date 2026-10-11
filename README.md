@@ -1,7 +1,7 @@
 # superstore-sales-profit-analysis-SQLproject
-Author: Yen-Ting Yang
-SQL Tools: MySQL and MySQL Workbench
-Visualization Tool: Power BI
+# Author: Yen-Ting Yang
+# SQL Tools: MySQL and MySQL Workbench
+# Visualization Tool: Power BI
 
 This project uses Sample Superstore retail data to analyze the distribution of sales and profit, identify products and markets that need priority checking, and explore the relationship between discounts and profitability. By organizing data with SQL, performing grouped comparisons, and visualizing results in Power BI, the query results are turned into actionable business recommendations ready for discussion and validation. 
 
