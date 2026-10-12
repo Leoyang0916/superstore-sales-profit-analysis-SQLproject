@@ -71,7 +71,7 @@ Before diving into analysis, raw string data in `superstore_import` was cleaned 
 - **Date Parsing**: Converted text dates into standardized `DATE` format using `STR_TO_DATE()`.
 - **Type Casting**: Converted financial metrics into `DECIMAL(10,2)` and quantities into `UNSIGNED INT`.
 
-sql
+```sql
 DROP TABLE IF EXISTS stg_superstore;
 
 CREATE TABLE stg_superstore AS
@@ -95,7 +95,7 @@ SELECT
     CAST(REPLACE(REPLACE(Discount, '$', ''), '%', '') AS DECIMAL(4, 2)) AS discount,
     CAST(REPLACE(REPLACE(Profit, '$', ''), ',', '') AS DECIMAL(10, 2)) AS profit
 FROM superstore_import;
-
+```
 # 6. Data Analysis & Findings
 ### Q1. What are the sales, profit, and Average Order Value (AOV) performance across regions and customer segments?
 
