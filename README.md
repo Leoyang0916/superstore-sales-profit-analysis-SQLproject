@@ -1,4 +1,4 @@
-# superstore-sales-profit-analysis-SQLproject
+# Superstore-sales-profit-analysis-SQLproject
 # Author: Yen-Ting Yang
 # SQL Tools: MySQL and MySQL Workbench
 # Visualization Tool: Power BI (Planning)
